@@ -13,8 +13,8 @@
         <Select v-model="formItem.roleId" style="width: 200px">
           <Option
             v-for="item in roleList"
-            :value="item.roleId"
-            :key="item.roleId"
+            :value="item.id"
+            :key="item.id"
           >
             {{ item.roleName }}
           </Option>
