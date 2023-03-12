@@ -1,5 +1,6 @@
 <template>
   <div id="login_container">
+    <span>{{isReg?'注册':'登录' }}</span>
     <Form
       ref="dataForm"
       :model="dataForm"
@@ -11,16 +12,17 @@
         <Input type="text" v-model="dataForm.us" placeholder="邮箱">
           <Icon type="ios-person-outline" slot="prepend"></Icon>
         </Input>
-        <Button
-          v-if="isReg"
-          type="primary"
-          class="sendBtn"
-          :disabled="sendText !== '发送'"
-          @click="sendCode('dataForm')"
-        >
-          {{ sendText }}
-        </Button>
+<!--        <Button-->
+<!--          v-if="isReg"-->
+<!--          type="primary"-->
+<!--          class="sendBtn"-->
+<!--          :disabled="sendText !== '发送'"-->
+<!--          @click="sendCode('dataForm')"-->
+<!--        >-->
+<!--          {{ sendText }}-->
+<!--        </Button>-->
       </FormItem>
+
       <FormItem prop="ps">
         <Input
           type="password"
@@ -31,16 +33,16 @@
           <Icon type="ios-lock-outline" slot="prepend"></Icon>
         </Input>
       </FormItem>
-      <FormItem prop="code" v-if="isReg">
-        <Input
-          type="password"
-          v-model="dataForm.code"
-          placeholder="验证码"
-          @on-enter="handleReg('dataForm')"
-        >
-          <Icon type="ios-lock-outline" slot="prepend"></Icon>
-        </Input>
-      </FormItem>
+<!--      <FormItem prop="code" v-if="isReg">-->
+<!--        <Input-->
+<!--          type="password"-->
+<!--          v-model="dataForm.code"-->
+<!--          placeholder="验证码"-->
+<!--          @on-enter="handleReg('dataForm')"-->
+<!--        >-->
+<!--          <Icon type="ios-lock-outline" slot="prepend"></Icon>-->
+<!--        </Input>-->
+<!--      </FormItem>-->
       <FormItem style="display: flex; justify-content: center">
         <Button type="primary" @click="handleSubmit('dataForm')">登录</Button>
         <Divider type="vertical" />
@@ -118,7 +120,7 @@ export default {
           .then((res) => {
             if (res.data.code === 200) {
               const data = res.data
-              console.log(data)
+              // console.log(data)
               this.$router.push('/welcome')
               this.$store.commit('setMenus', JSON.stringify(data.data))
             } else {

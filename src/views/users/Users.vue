@@ -56,7 +56,7 @@ export default {
           title: '性别',
           key: 'sex',
           render(h, params) {
-            return h('div', params.row.sex === 0 ? '男' : '女')
+            return h('div', params.row.sex === 1 ? '男' : '女')
           },
         },
         {
@@ -69,7 +69,7 @@ export default {
                 'i-switch',
                 {
                   props: {
-                    value: params.row.state ? true : false,
+                    value: params.row.state === 1,
                   },
                   on: {
                     'on-change': (state) => {
@@ -116,7 +116,7 @@ export default {
                   },
                   on: {
                     'on-ok': () => {
-                      this.remove(params.row._id)
+                      this.remove(params.row.id)
                     },
                   },
                 },
@@ -210,8 +210,8 @@ export default {
           this.$Message.error(err)
         })
     },
-    remove(_id) {
-      usersDel({ _id: _id })
+    remove(id) {
+      usersDel({id })
         .then((res) => {
           if (res.data.code === 200) {
             this.$Message.success('删除成功')
