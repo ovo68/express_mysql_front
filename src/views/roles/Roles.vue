@@ -124,7 +124,7 @@ export default {
                   },
                   on: {
                     click: () => {
-                      console.log(params.row)
+                      // console.log(params.row)
                       this.getPermit(params.row)
                     },
                   },

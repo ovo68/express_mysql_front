@@ -25,7 +25,7 @@
         <Button type="primary" @click="search">查询</Button>
         <Button style="margin-left: 8px" @click="clear">重置</Button>
         <Button style="margin-left: 8px" @click="exportExcel">导出excel</Button>
-        <Button style="margin-left: 8px" @click="exportJs">导出js文件</Button>
+<!--        <Button style="margin-left: 8px" @click="exportJs">导出js文件</Button>-->
       </FormItem>
     </Form>
     <Table

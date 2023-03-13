@@ -312,12 +312,12 @@ export default {
   mounted() {
     this.getGoodsList()
     this.getOrderList()
-    setTimeout(() => {
-      this.setTablesHeight()
-    }, 50)
-    window.onresize = () => {
-      this.setTablesHeight()
-    }
+    // setTimeout(() => {
+    //   this.setTablesHeight()
+    // }, 50)
+    // window.onresize = () => {
+    //   this.setTablesHeight()
+    // }
   },
 }
 </script>

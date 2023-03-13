@@ -1,12 +1,12 @@
 <template>
   <Modal v-model="open" :title="title">
     <Tree
-      ref="Tree"
-      :data="permitsData"
-      show-checkbox
-      check-directly
-      multiple
-      @on-check-change="checkChange"
+        ref="Tree"
+        :data="permitsData"
+        show-checkbox
+        check-directly
+        multiple
+        @on-check-change="checkChange"
     ></Tree>
     <div slot="footer" style="text-align: center">
       <Button @click="cancel">关闭</Button>
@@ -17,8 +17,9 @@
   </Modal>
 </template>
 <script>
-import { permitsList } from '@/api/permit'
-import { rolesSetPermits } from '@/api/role'
+import {permitsList} from '@/api/permit'
+import {rolesSetPermits} from '@/api/role'
+
 export default {
   name: 'rolesAddUpdate',
   data() {
@@ -28,21 +29,7 @@ export default {
       title: '分配权限',
       loading: false,
       authIds: '',
-      permitsData: [
-        {
-          title: 'parent 1',
-          id: 1,
-          expand: true,
-          selected: true,
-          children: [
-            {
-              title: 'parent 1-1',
-              id: 11,
-              expand: true,
-            },
-          ],
-        },
-      ],
+      permitsData: [],
     }
   },
   methods: {
@@ -56,70 +43,84 @@ export default {
     },
     getList() {
       permitsList()
-        .then((res) => {
-          if (res.data.code === 200) {
-            const data = res.data
-            this.permitsData = data.data
-            this.updateChildren()
-          } else {
-            this.$Message.error(res.data.msg)
-          }
-        })
-        .catch((err) => {
-          this.$Message.error(err)
-        })
+          .then((res) => {
+            if (res.data.code === 200) {
+              const data = res.data
+              this.permitsData = data.data
+              this.updateChildren()
+            } else {
+              this.$Message.error(res.data.msg)
+            }
+          })
+          .catch((err) => {
+            this.$Message.error(err)
+          })
     },
     ok(name) {
-      const temp = this.$refs[name].getCheckedNodes()
+
+      // const temp = this.$refs[name].getCheckedNodes()
+      const temp = this.$refs[name].getCheckedAndIndeterminateNodes()
+      console.log(temp)
       const checks = []
       temp.map((item) => {
         checks.push(item.id)
       })
+      console.log(checks)
+
+
       const postData = {
         authIds: checks.join(','),
         roleId: this.roleId,
       }
       this.loading = true
       rolesSetPermits(postData)
-        .then((res) => {
-          this.loading = false
-          if (res.data.code === 200) {
-            this.$Message.success('分配权限成功')
-            this.cancel()
-            this.$emit('reload')
-          } else {
-            this.$Message.error(res.data.msg)
-          }
-        })
-        .catch((err) => {
-          this.loading = false
-          this.$Message.error(err)
-        })
+          .then((res) => {
+            this.loading = false
+            if (res.data.code === 200) {
+              this.$Message.success('分配权限成功')
+              this.cancel()
+              this.$emit('reload')
+            } else {
+              this.$Message.error(res.data.msg)
+            }
+          })
+          .catch((err) => {
+            this.loading = false
+            this.$Message.error(err)
+          })
     },
     cancel(name) {
       this.open = false
     },
     checkChange(arr, item) {
-      // console.log('arr', arr, item)
+      console.log('arr', arr)
+      console.log("item", item)
+      console.log("getSelectedNodes", this.$refs['Tree'].getSelectedNodes())
+      console.log("getCheckedAndIndeterminateNodes", this.$refs['Tree'].getCheckedAndIndeterminateNodes())
     },
     updateChildren() {
       let authIds = ''
       if (this.authIds) {
         authIds = this.authIds.split(',')
       }
+
       function recursion(temp) {
         temp.map((item) => {
           if (authIds.includes(item.id.toString())) {
-            item.checked = true
+            // item.checked = true
+            item.selected = true
           }
           item.title = item.name
-          item.expand = true
           if (item.children.length) {
+            // item.expand = true
             recursion(item.children)
           }
         })
       }
+
+      // console.log("permitsData",this.permitsData)
       recursion(this.permitsData)
+      // console.log(this.permitsData)
     },
   },
 }

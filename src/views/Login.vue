@@ -86,13 +86,13 @@ export default {
             trigger: 'blur',
           },
         ],
-        code: [
-          {
-            required: true,
-            message: '请输入验证码',
-            trigger: 'blur',
-          },
-        ],
+        // code: [
+        //   {
+        //     required: true,
+        //     message: '请输入验证码',
+        //     trigger: 'blur',
+        //   },
+        // ],
       },
       isReg: false, // 注册状态
       sendText: '发送',

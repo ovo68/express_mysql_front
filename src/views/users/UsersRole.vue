@@ -61,6 +61,7 @@ export default {
   },
   methods: {
     init(params) {
+      this.getRolesList()
       console.log('params', params)
       this.formItem = {
         us: params.us,

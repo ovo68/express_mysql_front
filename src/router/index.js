@@ -77,15 +77,15 @@ const router = new VueRouter({
                         noCache: true,
                     },
                 },
-                {
-                    path: '/other',
-                    name: 'other',
-                    component: () => import('@/views/others/Other'),
-                    meta: {
-                        title: '其它',
-                        noCache: true,
-                    },
-                },
+                // {
+                //     path: '/other',
+                //     name: 'other',
+                //     component: () => import('@/views/others/Other'),
+                //     meta: {
+                //         title: '其它',
+                //         noCache: true,
+                //     },
+                // },
                 {
                     path: '/lang',
                     name: 'lang',
